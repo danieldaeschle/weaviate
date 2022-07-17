@@ -27,6 +27,9 @@ fi
 (cd $DIR/..; $SWAGGER generate server --name=weaviate --model-package=entities/models --server-package=adapters/handlers/rest --spec=openapi-specs/schema.json -P models.Principal --default-scheme=https --struct-tags=yaml --struct-tags=json)
 (cd $DIR/..; $SWAGGER generate client --name=weaviate --model-package=entities/models --spec=openapi-specs/schema.json -P models.Principal --default-scheme=https)
 
+# Explictly fix vendoring
+(cd $DIR/..; go mod tidy; go mod vendor)
+
 echo Generate Deprecation code...
 (cd $DIR/..; GO111MODULE=on go generate ./deprecations)
 
